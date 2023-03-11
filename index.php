@@ -39,9 +39,6 @@
         ],
 
     ];
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -79,32 +76,57 @@
   <body>
 
     <div class="container mt-5">
-      <h1 class=" pb-3">Lista Hotel</h1>
-      <form method="GET" class="d-flex align-items-center justify-content-center">
-        <h2 class="me-3">Filtri</h2>
-        <label class="me-1 align-self-bottom" for="parking">Parcheggio</label>
-      <input  type="checkbox" name="parking" id="parking">
-<button type="submit" class="btn btn-primary m-3">Cerca</button>
-      </form>
-   <table class="table table-hover">
-  <thead>
-    <tr>
-      <?php foreach ($hotels[0] as$key => $hotel ) { ?>
-      <th scope="col"><?= $key?></th>
-    <?php } ?>      
-    </tr>
-  </thead>
 
-  <tbody>
-    <?php foreach ($hotels as $hotel ) { ?>
+      <h1 class=" pb-3">Lista Hotel</h1>
+      <div class="d-flex align-items-center">
+        <h2 class="m-0 pe-2">Filtri</h2>
+        <form method="GET" class="d-flex align-items-center justify-content-center">
+          <label class="me-1 align-self-bottom" for="parking">Parcheggio</label>
+          <input class="me-3" type="checkbox" name="parking" >
+          
+          <select class="form-select" name="stars" id="stars" >
+            <option selected>Stelle</option>
+            <option value="1">1 stella</option>
+            <option value="2">2 Stelle</option>
+            <option value="3">3 Stelle</option>
+            <option value="4">4 Stelle</option>
+            <option value="5">5 Stelle</option>
+
+          </select>
+          <button type="submit" class="btn btn-primary m-3">Cerca</button>
+        </form>
+      </div>
+   <table class="table table-hover">
+    <thead>
       <tr>
-      <?php foreach ($hotel as  $data ) {  ?>
+        <?php foreach ($hotels[0] as$key => $hotel ) { ?>
+          <th scope="col"><?= $key?></th>        
+      <?php } ?>      
+      </tr>
+    </thead>
+
+    <tbody>
+      <?php foreach ($hotels as $hotel ) { ?>
         
-          <td><?= $data ?></td>
-          <?php } ?>
-        </tr>
-   <?php } ?>
-  </tbody>
+        <tr>
+        <?php foreach ($hotel as $key => $data ) :  
+          if ($key == "name")  { ?>
+            <td class="fw-semibold"><?= $data ?></td>
+          <?php } elseif($key == "parking") { 
+            if ($data == true) { ?> 
+              <td>Si</td>
+            <?php } else { ?> 
+              <td>No</td>
+            <?php } ?>
+          <?php } elseif($key == "vote") { ?>
+            <td><?= $data ?> Stelle</td>
+            <?php } else { ?> 
+            <td><?= $data ?> Km</td>
+        <?php } ?>
+            <?php endforeach; ?>
+          </tr>
+    <?php } ?>
+    </tbody>
 </table>
 </div>
   </body>
